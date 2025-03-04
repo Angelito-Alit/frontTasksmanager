@@ -1,0 +1,26 @@
+/* Estilos globales */
+body {
+    margin: 0;
+    font-family: 'Comic Sans MS', cursive, sans-serif; 
+    background-color: #dc9024;
+    color: #34495E;
+  }
+  
+  h1, h2, h3 {
+    color: #D35400;
+  }
+  
+  button {
+    background-color: #E67E22; 
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #D35400; 
+  }
