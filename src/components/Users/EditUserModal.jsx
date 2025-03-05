@@ -22,7 +22,6 @@ const EditUserModal = ({ visible, onCancel, user }) => {
       const values = await form.validateFields();
       await userService.updateUser(user._id, values);
       message.success('Usuario actualizado con éxito');
-      onCancel(true); // true indica que se actualizó correctamente
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
       message.error('Error al actualizar el usuario');

@@ -34,13 +34,9 @@ const GroupTasksPage = () => {
 
   useEffect(() => {
     fetchTasks();
-    
-    // Configurar actualización automática cada 3 segundos
     intervalRef.current = setInterval(() => {
       fetchTasks();
     }, 3000);
-    
-    // Limpiar el intervalo al desmontar el componente
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);

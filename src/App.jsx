@@ -10,7 +10,6 @@ import UserProfilePage from './Pages/ProfilePage/UserProfilePage';
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import MainLayout from './Layouts/MainLayout';
 
-// Componente para rutas protegidas
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   
@@ -21,7 +20,6 @@ const PrivateRoute = ({ children }) => {
   return children;
 };
 
-// Componente para rutas que requieren rol master
 const MasterRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   const userRole = localStorage.getItem('userRole');
@@ -38,7 +36,6 @@ const MasterRoute = ({ children }) => {
 };
 
 function App() {
-  // Verificar token en localStorage al cargar la aplicación
   useEffect(() => {
     const checkAuth = () => {
       const currentPath = window.location.pathname;

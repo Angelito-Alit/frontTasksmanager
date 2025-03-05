@@ -8,27 +8,22 @@ const MainLayout = ({ children }) => {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState('');
 
-  // Verificar si el usuario está autenticado
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      navigate('/login'); // Redirigir al login si no hay token
+      navigate('/login'); 
     } else {
       setUserRole(localStorage.getItem('userRole') || 'user');
     }
   }, [navigate]);
 
   const handleLogout = () => {
-    // Eliminar el token y cualquier otra información del usuario del localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('userRole');
-
-    // Redirigir al usuario a la página de inicio de sesión
     navigate('/login');
   };
 
-  // Define menu items using the new format
   const menuItems = [
     {
       key: '1',
@@ -44,7 +39,6 @@ const MainLayout = ({ children }) => {
     }
   ];
   
-  // Agregar opción de administración solo para usuarios master
   if (userRole === 'master') {
     menuItems.push({
       key: '4',
@@ -61,7 +55,7 @@ const MainLayout = ({ children }) => {
           mode="inline" 
           defaultSelectedKeys={['1']} 
           style={{ background: '#F39C12' }}
-          items={menuItems} // Using items prop instead of children
+          items={menuItems} 
         />
       </Sider>
       <Layout>

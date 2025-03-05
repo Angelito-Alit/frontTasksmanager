@@ -78,7 +78,7 @@ const GroupsPage = () => {
 
       <Modal
         title="Crear Grupo"
-        open={isModalVisible} // Changed from visible to open
+        open={isModalVisible} 
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >

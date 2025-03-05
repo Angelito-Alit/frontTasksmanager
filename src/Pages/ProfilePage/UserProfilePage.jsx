@@ -34,8 +34,6 @@ const UserProfilePage = () => {
       setLoading(true);
       await userService.updateProfile(values);
       message.success('Perfil actualizado con éxito');
-      
-      // Actualizar datos del usuario
       fetchUserData();
     } catch (error) {
       console.error('Error al actualizar perfil:', error);
