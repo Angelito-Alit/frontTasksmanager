@@ -9,6 +9,7 @@ import GroupTasksPage from './Pages/GroupTasksPage/GroupTasksPage';
 import UserProfilePage from './Pages/ProfilePage/UserProfilePage';
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import MainLayout from './Layouts/MainLayout';
+import { RefreshProvider } from './components/RefreshContext/RefreshContext';
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('token');
@@ -53,55 +54,57 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        
-        <Route path="/dashboard" element={
-          <PrivateRoute>
-            <MainLayout>
-              <DashboardPage />
-            </MainLayout>
-          </PrivateRoute>
-        } />
-        
-        <Route path="/groups" element={
-          <PrivateRoute>
-            <MainLayout>
-              <GroupsPage />
-            </MainLayout>
-          </PrivateRoute>
-        } />
-        
-        <Route path="/groupTasks/:groupId" element={
-          <PrivateRoute>
-            <MainLayout>
-              <GroupTasksPage />
-            </MainLayout>
-          </PrivateRoute>
-        } />
-        
-        <Route path="/profile" element={
-          <PrivateRoute>
-            <MainLayout>
-              <UserProfilePage />
-            </MainLayout>
-          </PrivateRoute>
-        } />
-        
-        <Route path="/profiles" element={
-          <MasterRoute>
-            <MainLayout>
-              <ProfilePage />
-            </MainLayout>
-          </MasterRoute>
-        } />
-        
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
+    <RefreshProvider interval={30000}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          
+          <Route path="/dashboard" element={
+            <PrivateRoute>
+              <MainLayout>
+                <DashboardPage />
+              </MainLayout>
+            </PrivateRoute>
+          } />
+          
+          <Route path="/groups" element={
+            <PrivateRoute>
+              <MainLayout>
+                <GroupsPage />
+              </MainLayout>
+            </PrivateRoute>
+          } />
+          
+          <Route path="/groupTasks/:groupId" element={
+            <PrivateRoute>
+              <MainLayout>
+                <GroupTasksPage />
+              </MainLayout>
+            </PrivateRoute>
+          } />
+          
+          <Route path="/profile" element={
+            <PrivateRoute>
+              <MainLayout>
+                <UserProfilePage />
+              </MainLayout>
+            </PrivateRoute>
+          } />
+          
+          <Route path="/profiles" element={
+            <MasterRoute>
+              <MainLayout>
+                <ProfilePage />
+              </MainLayout>
+            </MasterRoute>
+          } />
+          
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </RefreshProvider>
   );
 }
 

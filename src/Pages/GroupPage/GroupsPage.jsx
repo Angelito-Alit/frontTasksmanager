@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { List, Card, Button, Modal, Form, Input, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { groupService } from '../../services/api';
+import { useRefresh } from '../../components/RefreshContext/RefreshContext';
 
 const GroupsPage = () => {
   const [groups, setGroups] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const { lastRefresh } = useRefresh();
 
   useEffect(() => {
     fetchGroups();
-  }, []);
+  }, [lastRefresh]); 
 
   const fetchGroups = async () => {
     try {
@@ -34,6 +36,7 @@ const GroupsPage = () => {
       setIsModalVisible(false);
       form.resetFields();
       message.success('Grupo creado exitosamente.');
+      fetchGroups();
     } catch (error) {
       console.error('Error al crear el grupo:', error);
       message.error('Error al crear el grupo.');

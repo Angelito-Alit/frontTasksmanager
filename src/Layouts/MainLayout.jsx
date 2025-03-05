@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Menu, Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import { useRefresh } from '../components/RefreshContext/RefreshContext';
+import AutoRefresh from '../components/RefreshContext/AutoRefresh';
 
 const { Header, Content, Sider } = Layout;
 
 const MainLayout = ({ children }) => {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState('');
+  const { lastRefresh } = useRefresh();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -16,6 +19,10 @@ const MainLayout = ({ children }) => {
       setUserRole(localStorage.getItem('userRole') || 'user');
     }
   }, [navigate]);
+
+  const handleRefresh = () => {
+    console.log('Actualizando datos: ', new Date().toLocaleTimeString());
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -48,6 +55,7 @@ const MainLayout = ({ children }) => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
+      <AutoRefresh onRefresh={handleRefresh} />
       <Sider style={{ background: '#F39C12' }}>
         <div className="logo" />
         <Menu 
@@ -70,7 +78,9 @@ const MainLayout = ({ children }) => {
         </Header>
         <Content style={{ margin: '24px 16px 0' }}>
           <div style={{ padding: 24, minHeight: 360, background: '#FFFFFF' }}>
-            {children}
+            {React.Children.map(children, child => 
+              React.cloneElement(child, { key: lastRefresh })
+            )}
           </div>
         </Content>
       </Layout>

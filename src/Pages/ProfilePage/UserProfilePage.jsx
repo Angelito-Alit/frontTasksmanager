@@ -3,11 +3,13 @@ import { Card, Form, message } from 'antd';
 import { userService } from '../../services/api';
 import ProfileForm from '../../components/Profile/ProfileForm';
 import ProfileLoading from '../../components/Profile/ProfileLoading';
+import { useRefresh } from '../../components/RefreshContext/RefreshContext';
 
 const UserProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();
+  const { lastRefresh } = useRefresh();
 
   const fetchUserData = async () => {
     try {
@@ -27,7 +29,7 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [lastRefresh]);
 
   const handleUpdateProfile = async (values) => {
     try {

@@ -5,6 +5,7 @@ import { taskService } from '../../services/api';
 import AddTaskModal from '../../components/Tasks/AddTaskModal';
 import EditTaskModal from '../../components/Tasks/EditTaskModal';
 import TasksBoard from '../../components/Tasks/TasksBoard';
+import { useRefresh } from '../../components/RefreshContext/RefreshContext';
 
 const DashboardPage = () => {
   const [tasks, setTasks] = useState([]);
@@ -12,6 +13,7 @@ const DashboardPage = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
   const navigate = useNavigate();
+  const { lastRefresh } = useRefresh();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -23,7 +25,7 @@ const DashboardPage = () => {
     } else {
       fetchTasks();
     }
-  }, [navigate]);
+  }, [navigate, lastRefresh]); 
 
   const fetchTasks = async () => {
     try {
