@@ -51,13 +51,12 @@ const LoginPage = () => {
           >
             Iniciar Sesión
           </Button>
-          <Button 
-            type="default" 
-            onClick={() => navigate('/register')}
-            style={{ width: '100%' }}
-          >
-            Registrarse
-          </Button>
+          <div style={{ textAlign: 'center' }}>
+            <span>¿No tienes una cuenta? </span>
+            <Button type="link" onClick={() => navigate('/register')} style={{ color: '#673417', padding: 0 }}>
+              Registrarse
+            </Button>
+          </div>
         </Form.Item>
       </Form>
     </div>

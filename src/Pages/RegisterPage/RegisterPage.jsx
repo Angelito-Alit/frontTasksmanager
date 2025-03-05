@@ -21,6 +21,34 @@ const RegisterPage = () => {
     }
   };
 
+  const validatePassword = (_, value) => {
+    if (!value) {
+      return Promise.reject('Por favor ingresa tu contraseña');
+    }
+    
+    if (value.length < 8) {
+      return Promise.reject('La contraseña debe tener al menos 8 caracteres');
+    }
+    
+    if (!/[A-Z]/.test(value)) {
+      return Promise.reject('La contraseña debe incluir al menos una letra mayúscula');
+    }
+    
+    if (!/[a-z]/.test(value)) {
+      return Promise.reject('La contraseña debe incluir al menos una letra minúscula');
+    }
+    
+    if (!/[0-9]/.test(value)) {
+      return Promise.reject('La contraseña debe incluir al menos un número');
+    }
+    
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+      return Promise.reject('La contraseña debe incluir al menos un carácter especial (!@#$%^&*(),.?":{}|<>)');
+    }
+    
+    return Promise.resolve();
+  };
+
   return (
     <div style={{ maxWidth: '300px', margin: '50px auto' }}>
       <h2 style={{ textAlign: 'center', color: '#D35400' }}>Registro</h2>
@@ -42,12 +70,26 @@ const RegisterPage = () => {
         </Form.Item>
         <Form.Item
           name="password"
-          rules={[
-            { required: true, message: 'Por favor ingresa tu contraseña' },
-            { min: 6, message: 'La contraseña debe tener al menos 6 caracteres' }
-          ]}
+          rules={[{ validator: validatePassword }]}
         >
           <Input.Password placeholder="Contraseña" />
+        </Form.Item>
+        <Form.Item
+          name="confirmPassword"
+          dependencies={['password']}
+          rules={[
+            { required: true, message: 'Por favor confirma tu contraseña' },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('Las contraseñas no coinciden'));
+              },
+            }),
+          ]}
+        >
+          <Input.Password placeholder="Confirmar contraseña" />
         </Form.Item>
         <Form.Item>
           <Button
