@@ -104,7 +104,7 @@ const RegisterPage = () => {
       </Form>
       <div style={{ textAlign: 'center', marginTop: '16px' }}>
         <span>¿Ya tienes una cuenta? </span>
-        <Button type="link" onClick={() => navigate('/login')} style={{ color: '#E67E22' }}>
+        <Button type="link" onClick={() => navigate('/login')} style={{ color: '#673417' }}>
           Inicia sesión aquí
         </Button>
       </div>
