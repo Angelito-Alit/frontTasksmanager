@@ -37,10 +37,12 @@ const EditTaskModal = ({ visible, onCancel, task, onTaskUpdated }) => {
 
   return (
     <Modal
-      title="Editar Tarea"
+      title={<div style={{ color: '#D35400', fontSize: '18px' }}>Editar Tarea Personal</div>}
       open={visible}
       onCancel={onCancel}
       footer={null}
+      width={500}
+      bodyStyle={{ padding: '20px' }}
     >
       <Form form={form} onFinish={handleUpdateTask} layout="vertical">
         <Form.Item
@@ -67,7 +69,7 @@ const EditTaskModal = ({ visible, onCancel, task, onTaskUpdated }) => {
           name="description"
           label="Descripción"
         >
-          <Input.TextArea placeholder="Descripción de la tarea" />
+          <Input.TextArea placeholder="Descripción de la tarea" rows={4} />
         </Form.Item>
 
         <Form.Item
@@ -89,8 +91,18 @@ const EditTaskModal = ({ visible, onCancel, task, onTaskUpdated }) => {
           <Input placeholder="Categoría de la tarea" />
         </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit" style={{ background: '#E67E22', borderColor: '#E67E22' }}>
+        <Form.Item style={{ marginBottom: 0, textAlign: 'right' }}>
+          <Button 
+            type="primary" 
+            htmlType="submit" 
+            style={{ 
+              background: '#E67E22', 
+              borderColor: '#E67E22',
+              fontWeight: 'bold',
+              height: '40px',
+              width: '150px'
+            }}
+          >
             Actualizar Tarea
           </Button>
         </Form.Item>

@@ -51,21 +51,31 @@ const DashboardPage = () => {
   };
 
   return (
-    <div>
-      <h1 style={{ color: '#D35400' }}>Dashboard</h1>
+    <div className="dashboard-container" style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+        <h1 style={{ color: '#D35400', fontSize: '28px', margin: 0 }}>Dashboard de Tareas Personales</h1>
+        
+        <Button
+          type="primary"
+          onClick={() => setIsAddModalVisible(true)}
+          style={{ 
+            background: '#E67E22', 
+            borderColor: '#E67E22', 
+            fontSize: '16px', 
+            height: '40px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          }}
+        >
+          Agregar Tarea
+        </Button>
+      </div>
 
-      <Button
-        type="primary"
-        onClick={() => setIsAddModalVisible(true)}
-        style={{ background: '#E67E22', borderColor: '#E67E22', marginBottom: '16px' }}
-      >
-        Agregar Tarea
-      </Button>
-
-      <TasksBoard
-        tasks={tasks}
-        onEditTask={handleEditTask}
-      />
+      <div style={{ background: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)' }}>
+        <TasksBoard
+          tasks={tasks}
+          onEditTask={handleEditTask}
+        />
+      </div>
 
       <AddTaskModal
         visible={isAddModalVisible}

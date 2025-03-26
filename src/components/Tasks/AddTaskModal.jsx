@@ -25,10 +25,12 @@ const AddTaskModal = ({ visible, onCancel, onTaskAdded }) => {
 
   return (
     <Modal
-      title="Agregar Tarea"
+      title={<div style={{ color: '#D35400', fontSize: '18px' }}>Agregar Tarea Personal</div>}
       open={visible}
       onCancel={onCancel}
       footer={null}
+      width={500}
+      bodyStyle={{ padding: '20px' }}
     >
       <Form onFinish={handleAddTask} layout="vertical">
         <Form.Item
@@ -55,7 +57,7 @@ const AddTaskModal = ({ visible, onCancel, onTaskAdded }) => {
           name="description"
           label="Descripción"
         >
-          <Input.TextArea placeholder="Descripción de la tarea" />
+          <Input.TextArea placeholder="Descripción de la tarea" rows={4} />
         </Form.Item>
 
         <Form.Item
@@ -77,8 +79,18 @@ const AddTaskModal = ({ visible, onCancel, onTaskAdded }) => {
           <Input placeholder="Categoría de la tarea" />
         </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit" style={{ background: '#E67E22', borderColor: '#E67E22' }}>
+        <Form.Item style={{ marginBottom: 0, textAlign: 'right' }}>
+          <Button 
+            type="primary" 
+            htmlType="submit" 
+            style={{ 
+              background: '#E67E22', 
+              borderColor: '#E67E22',
+              fontWeight: 'bold',
+              height: '40px',
+              width: '150px'
+            }}
+          >
             Agregar Tarea
           </Button>
         </Form.Item>
