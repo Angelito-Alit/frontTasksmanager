@@ -86,7 +86,7 @@ const MainLayout = ({ children }) => {
     <Layout style={{ minHeight: '100vh' }}>
       <AutoRefresh 
         onRefresh={handleRefresh} 
-        interval={60000}
+        interval={20000}
       />
       
       <Modal
