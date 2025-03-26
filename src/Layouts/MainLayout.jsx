@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu, Button, Modal } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRefresh } from '../components/RefreshContext/RefreshContext';
 import AutoRefresh from '../components/RefreshContext/AutoRefresh';
@@ -10,6 +10,8 @@ const MainLayout = ({ children }) => {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState('');
   const { lastRefresh } = useRefresh();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [pendingRefresh, setPendingRefresh] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -21,7 +23,34 @@ const MainLayout = ({ children }) => {
   }, [navigate]);
 
   const handleRefresh = () => {
+    const activeElements = document.activeElement;
+    const isEditing = activeElements.tagName === 'INPUT' || 
+                      activeElements.tagName === 'TEXTAREA' ||
+                      activeElements.isContentEditable;
+    
+    if (isEditing) {
+      setIsModalVisible(true);
+      setPendingRefresh(true);
+    } else {
+      performRefresh();
+    }
+  };
+
+  const performRefresh = () => {
     console.log('Actualizando datos: ', new Date().toLocaleTimeString());
+    if (pendingRefresh) {
+      setPendingRefresh(false);
+    }
+  };
+
+  const handleModalOk = () => {
+    setIsModalVisible(false);
+    performRefresh();
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+    setPendingRefresh(false);
   };
 
   const handleLogout = () => {
@@ -55,7 +84,22 @@ const MainLayout = ({ children }) => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <AutoRefresh onRefresh={handleRefresh} />
+      <AutoRefresh 
+        onRefresh={handleRefresh} 
+        interval={180000}
+      />
+      
+      <Modal
+        title="Confirmar actualización"
+        visible={isModalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+        okText="Actualizar"
+        cancelText="Cancelar"
+      >
+        <p>Estás editando. ¿Seguro que quieres actualizar y perder los cambios no guardados?</p>
+      </Modal>
+
       <Sider style={{ background: '#F39C12' }}>
         <div className="logo" />
         <Menu 
@@ -78,9 +122,7 @@ const MainLayout = ({ children }) => {
         </Header>
         <Content style={{ margin: '24px 16px 0' }}>
           <div style={{ padding: 24, minHeight: 360, background: '#FFFFFF' }}>
-            {React.Children.map(children, child => 
-              React.cloneElement(child, { key: lastRefresh })
-            )}
+            {children}
           </div>
         </Content>
       </Layout>
